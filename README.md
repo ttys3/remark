@@ -85,19 +85,62 @@ For admin screenshots see [Admin UI wiki](https://github.com/umputun/remark/wiki
 
 #### With Docker
 
-_this is the recommended way to run remark42_
-
 * copy provided `docker-compose.yml` and customize for your needs
 * make sure you **don't keep** `ADMIN_PASSWD=something...` for any non-development deployments
 * pull prepared images from the docker hub and start - `docker-compose pull && docker-compose up -d`
 * alternatively compile from the sources - `docker-compose build && docker-compose up -d`
 
-#### Without docker
+#### With Podman
 
-* download archive for [stable release](https://github.com/ttys3/remark42/releases)
-* unpack with `gunzip` (Linux, macOS) or with `zip` (Windows)
-* run as `remark42.{os}-{arch} server {parameters...}`, i.e. `remark42.linux-amd64 server --secret=12345 --url=http://127.0.0.1:8080`
-* alternatively compile from the sources - `make OS=[linux|darwin|windows] ARCH=[amd64,386,arm64,arm32]`
+_this is the recommended way to run remark42_
+
+sample command with github oauth enabled
+
+```bash
+#!/bin/sh
+
+sudo podman run -d --name remark42 \
+-e REMARK_PORT=8080 \
+-p 8080:8080 \
+-e REMARK_URL=http://example.com:8080 \
+-e APP_UID=100 \
+-e TIME_ZONE="Asia/Hong_Kong" \
+-e SITE=ttys3 \
+-e ADMIN_SHARED_EMAIL=admin@example.com \
+-e SECRET='your-searect-here' \
+-e ADMIN_PASSWD=admin \
+-e AUTH_GITHUB_CID=YOUR-GITHUB-CID \
+-e AUTH_GITHUB_CSEC=YOUR-GITHUB-SECRET \
+-e NOTIFY_TYPE=email \
+-v path-to/data/remark42:/srv/var:rw,z \
+80x86/remark42:latest
+```
+
+run for dev, please add
+```bash
+-e AUTH_DEV=true \
+-e DEBUG=true \
+```
+
+to allow anonymous user to comment, add
+```bash
+-e AUTH_ANON=true \
+```
+
+to allow email verification, you need configure email provider and add
+```bash
+-e AUTH_EMAIL_ENABLE=true \
+-e AUTH_EMAIL_FROM=root@example.com \
+```
+
+allowd email service provider: smtp or mailgun or sendgrid
+
+for example use Mailgun
+```bash
+-e EMAIL_PROVIDER=mailgun \
+-e EMAIL_MG_DOMAIN=your-verified-domain.com \
+-e EMAIL_MG_API_KEY="your-Mailgun-Private-API-key" \
+```
 
 #### Parameters
 
