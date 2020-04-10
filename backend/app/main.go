@@ -126,7 +126,7 @@ func redirectGopkgzlgrLogAt(l *zap.Logger, dbg bool) func() {
 	// we need enable log.Debug Option to get the debug level output
 	log.Setup(log.Debug,
 		log.LevelBraces,
-		log.Format(`{{.Level}} {{.Message}}`), // only ouput level and message
+		log.Format(`{{.Level}} {{.Message}}`), // only output level and message
 		log.Out(&loggerWriter{logger, logFunc}), // hacking
 		log.Err(&loggerWriter{logger, logFunc})) // hacking
 	return func() {
@@ -170,7 +170,10 @@ func initLogger(dbg bool) func() {
 		zap.S().Infof("debug enabled")
 	}
 	return func() {
-		logger.Sync() // flushes buffer, if any
+		// flushes buffer, if any
+		if err := logger.Sync(); err != nil {
+			fmt.Printf("zap: Sync() failed with error: %s\n", err)
+		}
 		undo()
 	}
 }
