@@ -50,7 +50,7 @@ jobs:
         working-directory: backend/app
         env:
           GOFLAGS: "-mod=vendor"
-          TZ: "America/Chicago"
+          TZ: "Asia/Hong_Kong"
 
       - name: tast and lint examples
         run: |
@@ -61,7 +61,7 @@ jobs:
         working-directory: backend/_example/memory_store
         env:
 #          GOFLAGS: "-mod=mod"
-          TZ: "America/Chicago"
+          TZ: "Asia/Hong_Kong"
 
       - name: submit coverage
         run: $(go env GOPATH)/bin/goveralls -service="github" -coverprofile=$GITHUB_WORKSPACE/profile.cov
