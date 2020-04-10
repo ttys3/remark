@@ -379,6 +379,11 @@ func TestServerApp_DeprecatedArgs(t *testing.T) {
 	assert.Empty(t, s.SMTP.Username)
 	assert.Empty(t, s.SMTP.Password)
 	assert.Empty(t, s.SMTP.TimeOut)
+
+	// github.com/jessevdk/go-flags cli arguments is overridden from the specified environment variable
+	// we need to unset the env vars before the test, since it has higher priority
+	resetEnv("SMTP_HOST", "SMTP_PORT", "SMTP_TLS", "SMTP_USERNAME", "SMTP_PASSWORD", "SMTP_TIMEOUT")
+
 	_, err := p.ParseArgs(args)
 	require.NoError(t, err)
 	deprecatedFlags := s.HandleDeprecatedFlags()
