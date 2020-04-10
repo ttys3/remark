@@ -1,4 +1,4 @@
-# remark42 [![Build Status](https://github.com/umputun/remark/workflows/build/badge.svg)](https://github.com/umputun/remark/actions) [![Go Report Card](https://goreportcard.com/badge/github.com/umputun/remark)](https://goreportcard.com/report/github.com/umputun/remark) [![Coverage Status](https://coveralls.io/repos/github/umputun/remark/badge.svg?branch=master)](https://coveralls.io/github/umputun/remark?branch=master)
+# remark42 [![build_container_image](https://github.com/ttys3/remark42/workflows/build_container_image/badge.svg)](https://github.com/ttys3/remark42/actions) [![Go Report Card](https://goreportcard.com/badge/github.com/ttys3/remark42)](https://goreportcard.com/report/github.com/ttys3/remark42) [![Coverage Status](https://coveralls.io/repos/github/ttys3/remark42/badge.svg?branch=master)](https://coveralls.io/github/ttys3/remark42?branch=master)
 
 
 
@@ -31,7 +31,7 @@ Remark42 is a self-hosted, lightweight, and simple (yet functional) comment engi
 <details><summary>Screenshots</summary>
 
 Comments example:
-![](https://github.com/umputun/remark/blob/master/screenshots/comments.png)
+![](https://github.com/ttys3/remark42/blob/master/screenshots/comments.png)
 
 For admin screenshots see [Admin UI wiki](https://github.com/umputun/remark/wiki/Admin-UI)
 </details>
@@ -94,7 +94,7 @@ _this is the recommended way to run remark42_
 
 #### Without docker
 
-* download archive for [stable release](https://github.com/umputun/remark/releases) or [development version](https://remark42.com/downloads)
+* download archive for [stable release](https://github.com/ttys3/remark42/releases)
 * unpack with `gunzip` (Linux, macOS) or with `zip` (Windows)
 * run as `remark42.{os}-{arch} server {parameters...}`, i.e. `remark42.linux-amd64 server --secret=12345 --url=http://127.0.0.1:8080`
 * alternatively compile from the sources - `make OS=[linux|darwin|windows] ARCH=[amd64,386,arm64,arm32]`
@@ -248,7 +248,7 @@ version: '2'
 
 services:
     remark42:
-        image: umputun/remark42:latest
+        image: 80x86/remark42:latest
         restart: always
         container_name: "remark42"
         environment:
@@ -398,7 +398,7 @@ version: '2'
 
 services:
     remark42:
-        image: umputun/remark42:latest
+        image: 80x86/remark42:latest
         restart: always
         container_name: "remark42"
         environment:
@@ -496,7 +496,7 @@ window.REMARK42.changeTheme('light');
 Right now Remark is translated to en, ru (partially), de, and fi languages.
 You can pick one using [configuration object](#setup-on-your-website).
 
-Do you want translate remark42 to other locale? Please see [this documentation](https://github.com/umputun/remark42/blob/master/docs/translation.md) for details.
+Do you want translate remark42 to other locale? Please see [this documentation](https://github.com/ttys3/remark42/blob/master/docs/translation.md) for details.
 
 #### Last comments
 
@@ -570,7 +570,7 @@ Also script can use `url` property from `remark_config` object, or `window.locat
 
 ## Build from the source
 
-- to build docker container - `make docker`. This command will produce container `umputun/remark42`.
+- to build docker container - `make docker`. This command will produce container `80x86/remark42`.
 - to build a single binary for direct execution - `make OS=<linux|windows|darwin> ARCH=<amd64|386>`. This step will produce executable
  `remark42` file with everything embedded.
 
