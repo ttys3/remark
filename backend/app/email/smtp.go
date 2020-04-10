@@ -1,4 +1,4 @@
-package emailprovider
+package email
 
 import (
 	"bytes"
@@ -103,7 +103,7 @@ func (s *SMTPSender) SetTimeOut(timeout time.Duration) {
 
 // buildMessage generates email message to send using net/smtp.Data()
 // export BuildMessage for testing purpose
-// @TODO seprate emailprovider testing from notify email send testing
+// @TODO seprate email testing from notify email send testing
 func (s *SMTPSender) BuildMessage(to, body, contentType string) (message string, err error) {
 	addHeader := func(msg, h, v string) string {
 		msg += fmt.Sprintf("%s: %s\n", h, v)
@@ -195,7 +195,7 @@ func (s *SMTPSender) sendMessage(to, message string) error {
 
 // String representation of Email object
 func (s *SMTPSender) String() string {
-	return fmt.Sprintf("emailprovider.sender.smtp: from %q with username '%s' at server %s:%d", s.From, s.SmtpParams.Username, s.SmtpParams.Host, s.SmtpParams.Port)
+	return fmt.Sprintf("email.sender.smtp: from %q with username '%s' at server %s:%d", s.From, s.SmtpParams.Username, s.SmtpParams.Host, s.SmtpParams.Port)
 }
 
 // Create establish SMTP connection with server using credentials in smtpClientWithCreator.SmtpParams

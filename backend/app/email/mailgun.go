@@ -1,6 +1,6 @@
 // Mailgun(https://www.mailgun.com/) Free Plan provides 10,000 Emails per month
 
-package emailprovider
+package email
 
 import (
 	"context"
@@ -13,28 +13,28 @@ import (
 
 // MailgunConfig contain settings for mailgun API
 type MailgunSender struct {
-	mg		   *mailgun.MailgunImpl
-	Domain     		string
-	PrivateAPIKey 	string
-	TimeOut  time.Duration // TCP connection timeout
-	From string
-	Subject string
-	Headers map[string]string
+	mg          *mailgun.MailgunImpl
+	Domain      string
+	APIKey      string
+	TimeOut     time.Duration // TCP connection timeout
+	From        string
+	Subject     string
+	Headers     map[string]string
 	ContentType string // text/plain or text/html
 }
 
-func NewMailgunSender(Domain, PrivateAPIKey string, TimeOut time.Duration) EmailSender {
+func NewMailgunSender(Domain, APIKey string, TimeOut time.Duration) EmailSender {
 	if TimeOut == 0 {
 		TimeOut = DefaultEmailTimeout
 	}
 	sender := &MailgunSender {
-		Domain: Domain,
-		PrivateAPIKey: PrivateAPIKey,
+		Domain:  Domain,
+		APIKey:  APIKey,
 		TimeOut: TimeOut,
 	}
 
 	// Create an instance of the Mailgun Client
-	sender.mg = mailgun.NewMailgun(Domain, PrivateAPIKey)
+	sender.mg = mailgun.NewMailgun(Domain, APIKey)
 	sender.mg.Client().Timeout = sender.TimeOut
 	return sender
 }
@@ -101,5 +101,5 @@ func (s *MailgunSender) SetTimeOut(timeout time.Duration) {
 
 // String representation of Email object
 func (s *MailgunSender) String() string {
-	return fmt.Sprintf("emailprovider.sender.mailgrun: domain %s", s.Domain)
+	return fmt.Sprintf("email.sender.mailgrun: domain %s", s.Domain)
 }

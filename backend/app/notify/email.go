@@ -10,7 +10,7 @@ import (
 	log "github.com/go-pkgz/lgr"
 	"github.com/go-pkgz/repeater"
 	"github.com/pkg/errors"
-	"github.com/umputun/remark/backend/app/emailprovider"
+	emailprovider "github.com/umputun/remark/backend/app/email"
 )
 
 // EmailParams contain settings for email notifications

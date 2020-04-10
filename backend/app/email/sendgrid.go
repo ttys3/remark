@@ -1,7 +1,7 @@
 // SendGrid(https://sendgrid.com) Trial Plan provides 40,000 emails for 30 days
 // After your trial ends, you can send 100 emails/day for free
 
-package emailprovider
+package email
 
 import (
 	"fmt"
@@ -86,5 +86,5 @@ func (s *SendgridSender) SetTimeOut(timeout time.Duration) {
 
 // String representation of Email object
 func (s *SendgridSender) String() string {
-	return fmt.Sprintf("emailprovider.sender.sendgrid: API %s", "v3")
+	return fmt.Sprintf("email.sender.sendgrid: API %s", "v3")
 }
