@@ -42,7 +42,7 @@ For admin screenshots see [Admin UI wiki](https://github.com/umputun/remark/wiki
   - [Install](#install)
     - [Backend](#backend)
       - [With Docker](#with-docker)
-      - [Without docker](#without-docker)
+      - [With Podman](#with-podman)
       - [Parameters](#parameters)
         - [Required parameters](#required-parameters)
       - [Quick installation test](#quick-installation-test)
