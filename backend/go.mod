@@ -57,7 +57,6 @@ require (
 	github.com/yuin/goldmark v1.1.27
 	github.com/yuin/goldmark-highlighting v0.0.0-20200307114337-60d527fdb691
 	go.mongodb.org/mongo-driver v1.1.2 // indirect
-	go.uber.org/zap v1.14.1
 	golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550
 	golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8
 	golang.org/x/net v0.0.0-20191027093000-83d349e8ac1a
@@ -68,3 +67,5 @@ require (
 	gopkg.in/oauth2.v3 v3.11.0 // indirect
 	gopkg.in/yaml.v2 v2.2.4 // indirect
 )
+
+replace github.com/go-pkgz/lgr v0.6.3 => github.com/ttys3/lgr v1.0.0

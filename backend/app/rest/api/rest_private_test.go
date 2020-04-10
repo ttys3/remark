@@ -18,11 +18,11 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/go-chi/render"
 	"github.com/go-pkgz/auth/token"
-	"github.com/go-pkgz/lgr"
 	R "github.com/go-pkgz/rest"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	log "github.com/go-pkgz/lgr"
 	"github.com/umputun/remark/backend/app/notify"
 	"github.com/umputun/remark/backend/app/store"
 	"github.com/umputun/remark/backend/app/store/image"
@@ -901,7 +901,7 @@ func TestRest_CreateWithPictures(t *testing.T) {
 		teardown()
 		os.RemoveAll("/tmp/remark42")
 	}()
-	lgr.Setup(lgr.Debug, lgr.CallerFile, lgr.CallerFunc)
+	log.Setup(log.Debug, log.CallerFile, log.CallerFunc)
 
 	imageService := image.NewService(&image.FileSystem{
 		Staging:  "/tmp/remark42/images.staging",

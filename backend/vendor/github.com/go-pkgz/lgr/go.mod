@@ -1,3 +1,5 @@
-module github.com/go-pkgz/lgr
+module github.com/ttys3/lgr
 
-require github.com/stretchr/testify v1.3.0
+go 1.13
+
+require go.uber.org/zap v1.14.1

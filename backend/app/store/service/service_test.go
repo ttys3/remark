@@ -16,12 +16,12 @@ import (
 	"time"
 
 	bolt "github.com/coreos/bbolt"
-	"github.com/go-pkgz/lgr"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
+	log "github.com/go-pkgz/lgr"
 	"github.com/umputun/remark/backend/app/store"
 	"github.com/umputun/remark/backend/app/store/admin"
 	"github.com/umputun/remark/backend/app/store/engine"
@@ -1274,7 +1274,7 @@ func TestService_DeleteAll(t *testing.T) {
 
 func TestService_submitImages(t *testing.T) {
 
-	lgr.Setup(lgr.Debug, lgr.CallerFile, lgr.CallerFunc)
+	log.Setup(log.Debug, log.CallerFile, log.CallerFunc)
 
 	mockStore := image.MockStore{}
 	mockStore.On("Commit", mock.Anything, mock.Anything).Times(2).Return(nil)

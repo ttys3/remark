@@ -19,12 +19,12 @@ import (
 	"github.com/go-chi/render"
 	"github.com/go-pkgz/auth"
 	"github.com/go-pkgz/lcw"
-	log "github.com/go-pkgz/lgr"
 	R "github.com/go-pkgz/rest"
 	"github.com/go-pkgz/rest/logger"
 	"github.com/pkg/errors"
 	"github.com/rakyll/statik/fs"
 
+	log "github.com/go-pkgz/lgr"
 	"github.com/umputun/remark/backend/app/notify"
 	"github.com/umputun/remark/backend/app/rest"
 	"github.com/umputun/remark/backend/app/rest/proxy"
@@ -96,7 +96,7 @@ func (s *Rest) Run(port int) {
 
 		s.lock.Lock()
 		s.httpServer = s.makeHTTPServer(port, s.routes())
-		s.httpServer.ErrorLog = log.ToStdLogger(log.Default(), "WARN")
+		s.httpServer.ErrorLog = log.NewStdLogAt("WARN")
 		s.lock.Unlock()
 
 		err := s.httpServer.ListenAndServe()
@@ -106,10 +106,10 @@ func (s *Rest) Run(port int) {
 
 		s.lock.Lock()
 		s.httpsServer = s.makeHTTPSServer(s.SSLConfig.Port, s.routes())
-		s.httpsServer.ErrorLog = log.ToStdLogger(log.Default(), "WARN")
+		s.httpsServer.ErrorLog = log.NewStdLogAt("WARN")
 
 		s.httpServer = s.makeHTTPServer(port, s.httpToHTTPSRouter())
-		s.httpServer.ErrorLog = log.ToStdLogger(log.Default(), "WARN")
+		s.httpServer.ErrorLog = log.NewStdLogAt("WARN")
 		s.lock.Unlock()
 
 		go func() {
@@ -126,10 +126,10 @@ func (s *Rest) Run(port int) {
 		m := s.makeAutocertManager()
 		s.lock.Lock()
 		s.httpsServer = s.makeHTTPSAutocertServer(s.SSLConfig.Port, s.routes(), m)
-		s.httpsServer.ErrorLog = log.ToStdLogger(log.Default(), "WARN")
+		s.httpsServer.ErrorLog = log.NewStdLogAt("WARN")
 
 		s.httpServer = s.makeHTTPServer(port, s.httpChallengeRouter(m))
-		s.httpServer.ErrorLog = log.ToStdLogger(log.Default(), "WARN")
+		s.httpServer.ErrorLog = log.NewStdLogAt("WARN")
 
 		s.lock.Unlock()
 
