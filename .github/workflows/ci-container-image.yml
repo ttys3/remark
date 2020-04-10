@@ -2,7 +2,7 @@ name: build_container_image
 
 on:
   push:
-    branches: [ master ]
+    branches: [ ctr ]
     paths:
       - '.github/workflows/ci-container-image.yml'
       - 'backend/**'
@@ -11,7 +11,7 @@ on:
       - 'docker-init.sh'
       - 'Dockerfile'
   pull_request:
-    branches: [ master ]
+    branches: [ ctr ]
     paths:
       - '.github/workflows/ci-container-image.yml'
       - 'backend/**'
