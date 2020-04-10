@@ -75,6 +75,7 @@ type ServerCommand struct {
 	RestrictedWords  []string      `long:"restricted-words" env:"RESTRICTED_WORDS" description:"words prohibited to use in comments" env-delim:","`
 	EnableEmoji      bool          `long:"emoji" env:"EMOJI" description:"enable emoji"`
 	SimpleView       bool          `long:"simpler-view" env:"SIMPLE_VIEW" description:"minimal comment editor mode"`
+	CodeColor        string        `long:"code-color" env:"CODE_COLOR" default:"monokailight" description:"set chroma style for code highlight"`
 
 	Auth struct {
 		TTL struct {
@@ -454,7 +455,7 @@ func (s *ServerCommand) newServerApp() (*serverApp, error) {
 	if s.EnableEmoji {
 		emojiFmt = func(text string) string { return emoji.Sprint(text) }
 	}
-	commentFormatter := store.NewCommentFormatter(imgProxy, emojiFmt)
+	commentFormatter := store.NewCommentFormatter(imgProxy, emojiFmt).WithStyle(s.CodeColor)
 
 	sslConfig, err := s.makeSSLConfig()
 	if err != nil {

@@ -1,17 +1,22 @@
 package store
 
 import (
+	"bytes"
 	"net/url"
 	"strings"
 
-	"github.com/Depado/bfchroma"
 	"github.com/PuerkitoBio/goquery"
-	"github.com/alecthomas/chroma/formatters/html"
-	bf "github.com/russross/blackfriday/v2"
+	chromahtml "github.com/alecthomas/chroma/formatters/html"
+	"github.com/yuin/goldmark"
+	highlighting "github.com/yuin/goldmark-highlighting"
+	"github.com/yuin/goldmark/extension"
+	"github.com/yuin/goldmark/parser"
+	"github.com/yuin/goldmark/renderer/html"
 )
 
 // CommentFormatter implements all generic formatting ops on comment
 type CommentFormatter struct {
+	colorScheme string // chroma style name
 	converters []CommentConverter
 }
 
@@ -31,7 +36,13 @@ func (f CommentConverterFunc) Convert(text string) string {
 
 // NewCommentFormatter makes CommentFormatter
 func NewCommentFormatter(converters ...CommentConverter) *CommentFormatter {
-	return &CommentFormatter{converters: converters}
+	return &CommentFormatter{colorScheme: "monokailight", converters: converters}
+}
+
+// Set chroma style name
+func (f *CommentFormatter) WithStyle(colorScheme string) *CommentFormatter {
+	f.colorScheme = colorScheme
+	return f
 }
 
 // Format comment fields
@@ -42,18 +53,35 @@ func (f *CommentFormatter) Format(c Comment) Comment {
 
 // FormatText converts text with markdown processor, applies external converters and shortens links
 func (f *CommentFormatter) FormatText(txt string) (res string) {
-	mdExt := bf.NoIntraEmphasis | bf.Tables | bf.FencedCode |
-		bf.Strikethrough | bf.SpaceHeadings | bf.HardLineBreak |
-		bf.BackslashLineBreak | bf.Autolink
+	if f.colorScheme == "" {
+		f.colorScheme = "monokailight"
+	}
 
-	rend := bf.NewHTMLRenderer(bf.HTMLRendererParameters{
-		Flags: bf.Smartypants | bf.SmartypantsFractions | bf.SmartypantsDashes | bf.SmartypantsAngledQuotes,
-	})
+	markdown := goldmark.New(
+		goldmark.WithExtensions(extension.GFM), // Linkify | Table | Strikethrough | TaskList
+		goldmark.WithParserOptions(
+			parser.WithAutoHeadingID(),
+		),
+		goldmark.WithRendererOptions(
+			html.WithHardWraps(),
+		),
+		goldmark.WithExtensions(
+			highlighting.NewHighlighting(
+				highlighting.WithStyle(f.colorScheme),
+				highlighting.WithFormatOptions(
+					chromahtml.TabWidth(2),
+					chromahtml.WithClasses(true),
+				),
+			),
+		),
+		goldmark.WithExtensions(extension.Typographer), // substitutes punctuations with typographic entities like smartypants
+	)
 
-	extRend := bfchroma.NewRenderer(bfchroma.Extend(rend), bfchroma.ChromaOptions(html.WithClasses()))
-
-	res = string(bf.Run([]byte(txt), bf.WithExtensions(mdExt), bf.WithRenderer(extRend)))
-	res = f.unEscape(res)
+	var output bytes.Buffer
+	if err := markdown.Convert([]byte(txt), &output); err != nil {
+		panic(err)
+	}
+	res = f.unEscape(output.String())
 
 	for _, conv := range f.converters {
 		res = conv.Convert(res)

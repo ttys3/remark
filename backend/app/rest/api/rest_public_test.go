@@ -70,12 +70,13 @@ BKT
 	b, err := ioutil.ReadAll(resp.Body)
 	assert.NoError(t, err)
 	assert.Equal(t,
-		`<h1>h1</h1>
-<pre class="chroma">func TestRest_Preview(t *testing.T) {
+		`<h1 id="h1">h1</h1>
+<pre><code>func TestRest_Preview(t *testing.T) {
 srv, ts := prep(t)
   require.NotNil(t, srv)
 }
-</pre>`,
+</code></pre>
+`,
 		string(b))
 }
 

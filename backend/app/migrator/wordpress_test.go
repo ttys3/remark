@@ -92,12 +92,12 @@ func TestWP_Convert_MD(t *testing.T) {
 	}
 	require.Equal(t, 3, len(comments), "3 comments exported")
 
-	assert.Equal(t, "<p>Row1<br/>\nRow2</p>\n\n<p>Row4</p>\n", comments[0].Text)
+	assert.Equal(t, "<p>Row1<br/>\nRow2</p>\n<p>Row4</p>\n", comments[0].Text)
 
 	assert.Equal(t, "<p>markdown <code>text</code></p>\n", comments[1].Text)
 
 	expText := `<p>Row1 Link <a href="http://releases.rancher.com/os/latest">http://releases.rancher.com/os/latest</a> markdown <code>text</code> blah</p>`
-	expText += "\n\n<p>Row3 markdown<code>md block</code></p>\n"
+	expText += "\n<p>Row3 markdown<code>md block</code></p>\n"
 	assert.Equal(t, expText, comments[2].Text)
 }
 

@@ -18,18 +18,16 @@ func TestFormatter_FormatText(t *testing.T) {
 	}{
 		{"", "!converted", "empty"},
 		{"12345 abc", "<p>12345 abc</p>\n!converted", "simple"},
-		{"**xyz** _aaa_ - \"sfs\"", "<p><strong>xyz</strong> <em>aaa</em> – «sfs»</p>\n!converted", "format"},
+		{"**xyz** _aaa_ - \"sfs\"", "<p><strong>xyz</strong> <em>aaa</em> - “sfs”</p>\n!converted", "format"},
 		{
 			"http://127.0.0.1/some-long-link/12345/678901234567890",
-			"<p><a href=\"http://127.0.0.1/some-long-link/12345/678901234567890\">http://127.0.0." +
-				"1/some-long-link/12345/6789012...</a></p>\n!converted", "links",
+			"<p>http://127.0.0.1/some-long-link/12345/678901234567890</p>\n!converted", "links",
 		},
 		{"&mdash; not translated #354", "<p>— not translated #354</p>\n!converted", "mdash"},
 		{"smth\n```go\nfunc main(aa string) int {return 0}\n```", `<p>smth</p>
 <pre class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">(</span><span class="nx">aa</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span><span class="k">return</span> <span class="mi">0</span><span class="p">}</span>
 </pre>!converted`, "code with language"},
-		{"```\ntest_code\n```", `<pre class="chroma">test_code
-</pre>!converted`, "code without language"},
+		{"```\ntest_code\n```", "<pre><code>test_code\n</code></pre>\n!converted", "code without language"},
 	}
 	f := NewCommentFormatter(mockConverter{})
 	for _, tt := range tbl {
@@ -52,7 +50,7 @@ func TestFormatter_FormatTextConverterFunc(t *testing.T) {
 
 func TestFormatter_FormatComment(t *testing.T) {
 	comment := Comment{
-		Text:      "blah\n\nxyz",
+		Text:      "blah\nxyz",
 		User:      User{ID: "username"},
 		ParentID:  "p123",
 		ID:        "123",
@@ -66,7 +64,7 @@ func TestFormatter_FormatComment(t *testing.T) {
 
 	f := NewCommentFormatter(mockConverter{})
 	exp := comment
-	exp.Text = "<p>blah</p>\n\n<p>xyz</p>\n!converted"
+	exp.Text = "<p>blah<br/>\nxyz</p>\n!converted"
 	assert.Equal(t, exp, f.Format(comment))
 }
 
