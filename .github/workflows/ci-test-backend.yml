@@ -2,7 +2,7 @@ name: test_backend
 
 on:
   push:
-    branches:
+    branches: [ master ]
     tags:
     paths:
       - '.github/workflows/ci-test-backend.yml'
@@ -10,6 +10,7 @@ on:
       - '!backend/scripts/**'
       - '.golangci.yml'
   pull_request:
+    branches: [ master ]
     paths:
       - '.github/workflows/ci-test-backend.yml'
       - 'backend/**'
@@ -51,8 +52,18 @@ jobs:
         env:
           GOFLAGS: "-mod=vendor"
           TZ: "Asia/Hong_Kong"
+          SMTP_FROM: "remark42-ci@sg.ttys3.net"
+          SENDGRID_FROM: "remark42-ci@sg.ttys3.net"
+          SMTP_TO: ${{ secrets.SG_SMTP_TO }}
+          SENDGRID_TO: ${{ secrets.SG_SMTP_TO }}
+          SMTP_HOST: "smtp.sendgrid.net"
+          SMTP_PORT: 465
+          SMTP_TLS: true
+          SMTP_USERNAME: apikey
+          SMTP_PASSWORD: ${{ secrets.SG_SMTP_PASSWORD }}
+          SENDGRID_API_KEY: ${{ secrets.SG_SMTP_PASSWORD }}
 
-      - name: tast and lint examples
+      - name: test and lint backend/_example/memory_store
         run: |
           go version
           $GITHUB_WORKSPACE/golangci-lint version
@@ -60,7 +71,7 @@ jobs:
           $GITHUB_WORKSPACE/golangci-lint --config ${GITHUB_WORKSPACE}/backend/.golangci.yml run ./...
         working-directory: backend/_example/memory_store
         env:
-#          GOFLAGS: "-mod=mod"
+          GOFLAGS: "-mod=readonly"
           TZ: "Asia/Hong_Kong"
 
       - name: submit coverage

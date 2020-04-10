@@ -2,12 +2,13 @@ name: test_frontend
 
 on:
   push:
-    branches:
+    branches: [ master ]
     tags:
     paths:
       - '.github/workflows/ci-test-frontend.yml'
       - 'frontend/**'
   pull_request:
+    branches: [ master ]
     paths:
       - '.github/workflows/ci-test-frontend.yml'
       - 'frontend/**'

@@ -1,0 +1,37 @@
+name: build_container_image
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - '.github/workflows/ci-container-image.yml'
+      - 'backend/**'
+      - 'frontend/**'
+      - '.dockerignore'
+      - 'docker-init.sh'
+      - 'Dockerfile'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - '.github/workflows/ci-container-image.yml'
+      - 'backend/**'
+      - 'frontend/**'
+      - '.dockerignore'
+      - 'docker-init.sh'
+      - 'Dockerfile'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1.0.1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: 80x86/remark42
+          tags: latest
+          build_args: SKIP_BACKEND_TEST=true,SKIP_FRONTEND_TEST=true,CI=github
+
