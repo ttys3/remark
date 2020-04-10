@@ -14,54 +14,99 @@ This documentation describes how to enable the email-related capabilities of Rem
 
     ![Email notifications subscription](/docs/images/email_notifications.png?raw=true)
 
-## Setup email server connection
+## Setup email provider
 
-To enable any of email functionality you need to set up email (SMTP) server connection using these variables:
+To enable any of email functionality you need to set up an email provider.
+
+all providers are **WEB API** based except for smtp.
+
+the recommended way is to use the **WEB API** provider for many good reasons
+
+current supported providers
+```ini
+mailgun
+sendgrid
+smtp
+```
+common variables:
 
 ```
-SMTP_HOST
-SMTP_PORT
-SMTP_TLS
-SMTP_USERNAME
-SMTP_PASSWORD
-SMTP_TIMEOUT
+EMAIL_PROVIDER
 ```
 
-### Mailgun
+### `mailgun` provider setup
+
+The `mailgun` provider requires these variables:
+
+```ini
+EMAIL_PROVIDER
+EMAIL_MG_DOMAIN
+EMAIL_MG_API_KEY
+EMAIL_MG_TIMEOUT
+```
+
+### `sendgrid` provider setup
+
+The `sendgrid` provider requires these variables:
+
+```ini
+EMAIL_PROVIDER
+EMAIL_SG_API_KEY
+EMAIL_SG_TIMEOUT
+```
+
+### `smtp` provider setup
+
+The `smtp` provider requires these variables:
+
+```
+EMAIL_PROVIDER
+EMAIL_SMTP_HOST
+EMAIL_SMTP_PORT
+EMAIL_SMTP_TLS
+EMAIL_SMTP_USERNAME
+EMAIL_SMTP_PASSWORD
+EMAIL_SMTP_TIMEOUT
+```
+
+### Mailgun SMTP
 
 This is an example of a configuration using [Mailgun](https://www.mailgun.com/) email service:
 
 ```
-      - SMTP_HOST=smtp.eu.mailgun.org
-      - SMTP_PORT=465
-      - SMTP_TLS=true
-      - SMTP_USERNAME=postmaster@mg.example.com
-      - SMTP_PASSWORD=secretpassword
+      - EMAIL_PROVIDER=smtp
+      - EMAIL_SMTP_HOST=smtp.eu.mailgun.org
+      - EMAIL_SMTP_PORT=465
+      - EMAIL_SMTP_TLS=true
+      - EMAIL_SMTP_USERNAME=postmaster@mg.example.com
+      - EMAIL_SMTP_PASSWORD=secretpassword
       - AUTH_EMAIL_FROM=notify@example.com
 ```
 
-### Gmail
+### Gmail SMTP
 
 Configuration example for Gmail:
 
 ```
-      - SMTP_HOST=smtp.gmail.com
-      - SMTP_PORT=465
-      - SMTP_TLS=true
-      - SMTP_USERNAME=example.user@gmail.com
-      - SMTP_PASSWORD=secretpassword
+      - EMAIL_PROVIDER=smtp
+      - EMAIL_SMTP_HOST=smtp.gmail.com
+      - EMAIL_SMTP_PORT=465
+      - EMAIL_SMTP_TLS=true
+      - EMAIL_SMTP_USERNAME=example.user@gmail.com
+      - EMAIL_SMTP_PASSWORD=secretpassword
       - AUTH_EMAIL_FROM=example.user@gmail.com
 ```
 
-### Amazon SES
+### Amazon SES SMTP
 
 Configuration example for [Amazon SES](https://aws.amazon.com/ses/) (us-east-1 region):
 ```
-      - SMTP_HOST=email-smtp.us-east-1.amazonaws.com
-      - SMTP_PORT=465
-      - SMTP_TLS=true
-      - SMTP_USERNAME=access_key_id
-      - SMTP_PASSWORD=secret_access_key
+      - EMAIL_PROVIDER=smtp
+      - EMAIL_SMTP_HOST=email-smtp.us-east-1.amazonaws.com
+      - EMAIL_SMTP_PORT=465
+      - EMAIL_SMTP_TLS=true
+      - EMAIL_SMTP_USERNAME=access_key_id
+      - EMAIL_SMTP_PASSWORD=secret_access_key
       - AUTH_EMAIL_FROM=notify@example.com
 
 ```
