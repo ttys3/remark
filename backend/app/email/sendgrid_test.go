@@ -37,8 +37,13 @@ func Test_SendgridSender(t *testing.T) {
 func Test_SendgridSDK(t *testing.T) {
 	fromEmail := os.Getenv("SENDGRID_FROM")
 	toEmail := os.Getenv("SENDGRID_TO")
-	client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
+	key := os.Getenv("SENDGRID_API_KEY")
 
+	if fromEmail == "" || toEmail == "" || key == "" {
+		t.Skip("SENDGRID_FROM, SENDGRID_TO or SENDGRID_API_KEY is empty, skip the SendgridSDK test ...")
+	}
+
+	client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
 	from := mail.NewEmail("Example User", fromEmail)
 	subject := "Sending with SendGrid is Fun"
 	to := mail.NewEmail("Example User", toEmail)
