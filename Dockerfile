@@ -55,24 +55,36 @@ RUN cd /srv/frontend && \
     else echo "skip frontend tests and lint" ; npm run build ; fi && \
     rm -rf ./node_modules
 
-FROM umputun/baseimage:app
+FROM umputun/baseimage:app as stage
 
-WORKDIR /srv
+RUN mkdir /stage
 
-ADD docker-init.sh /entrypoint.sh
-ADD backend/scripts/backup.sh /usr/local/bin/backup
-ADD backend/scripts/restore.sh /usr/local/bin/restore
-ADD backend/scripts/import.sh /usr/local/bin/import
-RUN chmod +x /entrypoint.sh /usr/local/bin/backup /usr/local/bin/restore /usr/local/bin/import
+WORKDIR /stage
 
-COPY --from=build-backend /build/backend/remark42 /srv/remark42
-COPY --from=build-frontend /srv/frontend/public/ /srv/web
-RUN chown -R app:app /srv
-RUN ln -s /srv/remark42 /usr/bin/remark42
+COPY docker-init.sh ./entrypoint.sh
+COPY backend/scripts/backup.sh ./usr/local/bin/backup
+COPY backend/scripts/restore.sh ./usr/local/bin/restore
+COPY backend/scripts/import.sh ./usr/local/bin/import
+
+RUN chmod +x ./entrypoint.sh ./usr/local/bin/backup ./usr/local/bin/restore ./usr/local/bin/import
+
+COPY --from=build-backend /build/backend/remark42 ./srv/remark42
+COPY --from=build-frontend /srv/frontend/public/ ./srv/web
+
+COPY docker-init.sh ./srv/init.sh
+
+RUN mkdir ./srv/var
+RUN chown -R app:app ./srv
+RUN mkdir -p ./usr/bin && ln -s ./srv/remark42 ./usr/bin/remark42
+RUN chmod +x ./srv/init.sh
+
+FROM umputun/baseimage:app as final
+
+COPY --from=stage /stage/ /
 
 EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=3s CMD curl --fail http://localhost:8080/ping || exit 1
 
-COPY docker-init.sh /srv/init.sh
-RUN chmod +x /srv/init.sh
+WORKDIR /srv
+
 CMD ["/srv/remark42", "server"]
