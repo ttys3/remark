@@ -54,7 +54,12 @@ func (s *SendgridSender) Send(to, text string) error {
 	sendgrid.DefaultClient.HTTPClient.Timeout = s.TimeOut
 	resp, err := s.sg.Send(sgmail)
 	if err != nil {
-		return fmt.Errorf("sendgrid: send failed: %w", err)
+		return fmt.Errorf("sendgrid: request failed: %w", err)
+	}
+	// 2xx responses indicate a successful request
+	// see https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html
+	if resp.StatusCode%100 != 2 {
+		return fmt.Errorf("sendgrid: send failed with err: %+v", resp.Body)
 	}
 	fmt.Printf("sendgrid: send to %s success, StatusCode: %d\n", to, resp.StatusCode)
 	return nil
