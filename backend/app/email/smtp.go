@@ -239,7 +239,7 @@ func (sc *SmtpCreator) Create(params *SmtpParams) (SmtpClient, error) {
 	if err := conn.SetReadDeadline(time.Now().Add(params.TimeOut)); err != nil {
 		return nil, errors.Wrapf(err, "SetReadDeadline failed while connecting to %s", srvAddress)
 	}
-	c, err = smtp.NewClient(conn, srvAddress)
+	c, err = smtp.NewClient(conn, params.Host)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to dial")
 	}
