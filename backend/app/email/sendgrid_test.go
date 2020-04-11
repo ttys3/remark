@@ -21,7 +21,7 @@ func Test_SendgridSender(t *testing.T) {
 	}
 
 	sndr := NewSendgridSender(key, 0)
-	assert.Equal(t, DefaultEmailTimeout, sndr.(*SendgridSender).TimeOut, "test default timeout value")
+	assert.Equal(t, DefaultEmailTimeout, sndr.(*SendgridSender).Timeout, "test default timeout value")
 
 	subject := "Sending with SendGrid is Fun"
 	sndr.SetSubject(subject)

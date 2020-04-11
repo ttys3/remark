@@ -14,6 +14,6 @@ type EmailSender interface {
 	ResetHeaders()
 	SetFrom(from string)
 	SetSubject(subject string)
-	SetTimeOut(timeout time.Duration)
+	SetTimeout(timeout time.Duration)
 	Name() string
 }

@@ -13,22 +13,22 @@ import (
 
 // MailgunConfig contain settings for mailgun API
 type SendgridSender struct {
-	sg		   *sendgrid.Client
-	APIKey 	string // the SendGrid API key
-	TimeOut  time.Duration // TCP connection timeout
-	From string
-	Subject string
-	Headers map[string]string
+	sg          *sendgrid.Client
+	APIKey      string        // the SendGrid API key
+	Timeout     time.Duration // TCP connection timeout
+	From        string
+	Subject     string
+	Headers     map[string]string
 	ContentType string // text/plain or text/html
 }
 
-func NewSendgridSender(APIKey string, TimeOut time.Duration) EmailSender {
-	if TimeOut == 0 {
-		TimeOut = DefaultEmailTimeout
+func NewSendgridSender(APIKey string, timeout time.Duration) EmailSender {
+	if timeout == 0 {
+		timeout = DefaultEmailTimeout
 	}
 	sender := &SendgridSender {
-		APIKey: APIKey,
-		TimeOut: TimeOut,
+		APIKey:  APIKey,
+		Timeout: timeout,
 	}
 
 	// Create an instance of the sendgrid Client
@@ -51,7 +51,7 @@ func (s *SendgridSender) Send(to, text string) error {
 		sgmail.Headers = s.Headers
 	}
 	// Send the message	with a 10 second timeout
-	sendgrid.DefaultClient.HTTPClient.Timeout = s.TimeOut
+	sendgrid.DefaultClient.HTTPClient.Timeout = s.Timeout
 	resp, err := s.sg.Send(sgmail)
 	if err != nil {
 		return fmt.Errorf("sendgrid: request failed: %w", err)
@@ -84,9 +84,9 @@ func (s *SendgridSender) SetSubject(subject string) {
 	s.Subject = subject
 }
 
-func (s *SendgridSender) SetTimeOut(timeout time.Duration) {
-	s.TimeOut = timeout
-	sendgrid.DefaultClient.HTTPClient.Timeout = s.TimeOut
+func (s *SendgridSender) SetTimeout(timeout time.Duration) {
+	s.Timeout = timeout
+	sendgrid.DefaultClient.HTTPClient.Timeout = s.Timeout
 }
 
 // String representation of Email object

@@ -94,7 +94,7 @@ func (s *MailgunSender) SetSubject(subject string) {
 	s.Subject = subject
 }
 
-func (s *MailgunSender) SetTimeOut(timeout time.Duration) {
+func (s *MailgunSender) SetTimeout(timeout time.Duration) {
 	s.TimeOut = timeout
 	s.mg.Client().Timeout = s.TimeOut
 }

@@ -97,7 +97,7 @@ func (s *SMTPSender) SetSubject(subject string) {
 	s.Subject = subject
 }
 
-func (s *SMTPSender) SetTimeOut(timeout time.Duration) {
+func (s *SMTPSender) SetTimeout(timeout time.Duration) {
 	s.SmtpParams.TimeOut = timeout
 }
 

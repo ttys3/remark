@@ -82,7 +82,7 @@ func TestEmailNew(t *testing.T) {
 				assert.Equal(t, defaultEmailVerificationTemplate, email.EmailParams.VerificationTemplate, "empty emailParams.VerificationTemplate changed to default")
 				assert.Equal(t, d.emailParams.From, email.EmailParams.From, "emailParams.From unchanged after creation")
 				if d.smtpParams.TimeOut == 0 {
-					assert.Equal(t, emailprovider.DefaultEmailTimeout, smtpSndr.SmtpParams.TimeOut, "empty emailParams.TimeOut changed to default")
+					assert.Equal(t, emailprovider.DefaultEmailTimeout, smtpSndr.SmtpParams.TimeOut, "empty emailParams.Timeout changed to default")
 				} else {
 					assert.Equal(t, d.smtpParams.TimeOut, smtpSndr.SmtpParams.TimeOut, "emailParams.TimOut unchanged after creation")
 				}
