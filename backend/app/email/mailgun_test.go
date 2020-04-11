@@ -16,7 +16,7 @@ func Test_MailgunSender(t *testing.T) {
 		t.Skip("MAILGUN_FROM, MAILGUN_TO, MAILGUN_DOMAIN or MAILGUN_API_KEY is empty, skip the MailgunSender test ...")
 	}
 	sndr := NewMailgunSender(dm, key, 0)
-	assert.Equal(t, DefaultEmailTimeout, sndr.(*MailgunSender).TimeOut, "test default timeout value")
+	assert.Equal(t, DefaultEmailTimeout, sndr.(*MailgunSender).Timeout, "test default timeout value")
 
 	subject := "Sending with Mailgun is Fun"
 	sndr.SetSubject(subject)

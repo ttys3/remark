@@ -22,17 +22,17 @@ type SendgridSender struct {
 	ContentType string // text/plain or text/html
 }
 
-func NewSendgridSender(APIKey string, timeout time.Duration) EmailSender {
+func NewSendgridSender(apiKey string, timeout time.Duration) EmailSender {
 	if timeout == 0 {
 		timeout = DefaultEmailTimeout
 	}
 	sender := &SendgridSender {
-		APIKey:  APIKey,
+		APIKey:  apiKey,
 		Timeout: timeout,
 	}
 
 	// Create an instance of the sendgrid Client
-	sender.sg = sendgrid.NewSendClient(APIKey)
+	sender.sg = sendgrid.NewSendClient(apiKey)
 	return sender
 }
 
@@ -50,8 +50,7 @@ func (s *SendgridSender) Send(to, text string) error {
 	if s.Headers != nil && len(s.Headers) > 0{
 		sgmail.Headers = s.Headers
 	}
-	// Send the message	with a 10 second timeout
-	sendgrid.DefaultClient.HTTPClient.Timeout = s.Timeout
+	s.SetTimeout(s.Timeout)
 	resp, err := s.sg.Send(sgmail)
 	if err != nil {
 		return fmt.Errorf("sendgrid: request failed: %w", err)
@@ -85,7 +84,9 @@ func (s *SendgridSender) SetSubject(subject string) {
 }
 
 func (s *SendgridSender) SetTimeout(timeout time.Duration) {
-	s.Timeout = timeout
+	if timeout != 0 {
+		s.Timeout = timeout
+	}
 	sendgrid.DefaultClient.HTTPClient.Timeout = s.Timeout
 }
 

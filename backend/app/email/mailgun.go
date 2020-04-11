@@ -16,26 +16,25 @@ type MailgunSender struct {
 	mg          *mailgun.MailgunImpl
 	Domain      string
 	APIKey      string
-	TimeOut     time.Duration // TCP connection timeout
+	Timeout     time.Duration // TCP connection timeout
 	From        string
 	Subject     string
 	Headers     map[string]string
 	ContentType string // text/plain or text/html
 }
 
-func NewMailgunSender(Domain, APIKey string, TimeOut time.Duration) EmailSender {
-	if TimeOut == 0 {
-		TimeOut = DefaultEmailTimeout
+func NewMailgunSender(domain, apiKey string, timeout time.Duration) EmailSender {
+	if timeout == 0 {
+		timeout = DefaultEmailTimeout
 	}
 	sender := &MailgunSender {
-		Domain:  Domain,
-		APIKey:  APIKey,
-		TimeOut: TimeOut,
+		Domain:  domain,
+		APIKey:  apiKey,
+		Timeout: timeout,
 	}
 
 	// Create an instance of the Mailgun Client
-	sender.mg = mailgun.NewMailgun(Domain, APIKey)
-	sender.mg.Client().Timeout = sender.TimeOut
+	sender.mg = mailgun.NewMailgun(domain, apiKey)
 	return sender
 }
 
@@ -64,6 +63,7 @@ func (s *MailgunSender) Send(to, text string) error {
 			message.AddHeader(k, s.Headers[k])
 		}
 	}
+	s.SetTimeout(s.Timeout)
 	ctx, cancel := context.WithTimeout(context.Background(), DefaultEmailTimeout)
 	defer cancel()
 	// Send the message	with a 10 second timeout
@@ -95,8 +95,10 @@ func (s *MailgunSender) SetSubject(subject string) {
 }
 
 func (s *MailgunSender) SetTimeout(timeout time.Duration) {
-	s.TimeOut = timeout
-	s.mg.Client().Timeout = s.TimeOut
+	if timeout != 0 {
+		s.Timeout = timeout
+	}
+	s.mg.Client().Timeout = s.Timeout
 }
 
 // String representation of Email object
