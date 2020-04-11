@@ -41,6 +41,12 @@ func (s *SendgridSender) Name() string {
 }
 
 func (s *SendgridSender) Send(to, text string) error {
+	if s.From == "" {
+		return fmt.Errorf("sendgrid: empty From. the from object must be provided for every email send")
+	}
+	if to == "" {
+		return fmt.Errorf("sendgrid: empty to. at least one receipt should be provided")
+	}
 	fromEmail := mail.NewEmail("", s.From)
 	toEmail := mail.NewEmail("", to)
 	sgmail := mail.NewSingleEmail(fromEmail, s.Subject, toEmail, text, text)

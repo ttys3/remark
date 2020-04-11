@@ -43,6 +43,12 @@ func (s *MailgunSender) Name() string {
 }
 
 func (s *MailgunSender) Send(to, text string) error {
+	if s.From == "" {
+		return fmt.Errorf("mailgun: empty From. the from object must be provided for every email send")
+	}
+	if to == "" {
+		return fmt.Errorf("mailgun: empty to. at least one receipt should be provided")
+	}
 	message := s.mg.NewMessage(s.From, s.Subject, text, to)
 	message.SetHtml(text)
 

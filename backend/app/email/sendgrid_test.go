@@ -28,6 +28,7 @@ func Test_SendgridSender(t *testing.T) {
 	htmlContent := "<strong>and easy to do anywhere, even with Go</strong><p>this is a testing email from CI</p>"
 
 	t.Logf("try send from %s to %s", fromEmail, toEmail)
+	sndr.SetFrom(fromEmail)
 	err := sndr.Send(toEmail, htmlContent)
 	if err != nil {
 		t.Error(err)
