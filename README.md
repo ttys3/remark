@@ -144,99 +144,99 @@ for example use Mailgun
 
 #### Parameters
 
-| Command line            | Environment             | Default                  | Description                                     |
-| ----------------------- | ----------------------- | ------------------------ | ----------------------------------------------- |
-| url                     | REMARK_URL              |                          | url to remark42 server, _required_              |
-| secret                  | SECRET                  |                          | secret key, _required_                          |
-| site                    | SITE                    | `remark`                 | site name(s), _multi_                           |
-| store.type              | STORE_TYPE              | `bolt`                   | type of storage, `bolt` or `rpc`                |
-| store.bolt.path         | STORE_BOLT_PATH         | `./var`                  | path to data directory                          |
-| store.bolt.timeout      | STORE_BOLT_TIMEOUT      | `30s`                    | boltdb access timeout                           |
-| admin.shared.id         | ADMIN_SHARED_ID         |                          | admin names (list of user ids), _multi_         |
-| admin.shared.email      | ADMIN_SHARED_EMAIL      | `admin@${REMARK_URL}`    | admin email                                     |
-| backup                  | BACKUP_PATH             | `./var/backup`           | backups location                                |
-| max-back                | MAX_BACKUP_FILES        | `10`                     | max backup files to keep                        |
-| cache.max.items         | CACHE_MAX_ITEMS         | `1000`                   | max number of cached items, `0` - unlimited     |
-| cache.max.value         | CACHE_MAX_VALUE         | `65536`                  | max size of cached value, `0` - unlimited       |
-| cache.max.size          | CACHE_MAX_SIZE          | `50000000`               | max size of all cached values, `0` - unlimited  |
-| avatar.type             | AVATAR_TYPE             | `fs`                     | type of avatar storage, `fs`, `bolt`, or `uri`  |
-| avatar.fs.path          | AVATAR_FS_PATH          | `./var/avatars`          | avatars location for `fs` store                 |
-| avatar.bolt.file        | AVATAR_BOLT_FILE        | `./var/avatars.db`       | file name for  `bolt` store                     |
-| avatar.uri              | AVATAR_URI              | `./var/avatars`          | avatar store uri                                |
-| avatar.rsz-lmt          | AVATAR_RSZ_LMT          | `0` (disabled)           | max image size for resizing avatars on save     |
-| image.type              | IMAGE_TYPE              | `fs`                     | type of image storage, `fs`, `bolt`             |
-| image.max-size          | IMAGE_MAX_SIZE          | `5000000`                | max size of image file                          |
-| image.fs.path           | IMAGE_FS_PATH           | `./var/pictures`         | permanent location of images                    |
-| image.fs.staging        | IMAGE_FS_STAGING        | `./var/pictures.staging` | staging location of images                      |
-| image.fs.partitions     | IMAGE_FS_PARTITIONS     | `100`                    | number of image partitions                      |
-| image.bolt.file         | IMAGE_BOLT_FILE         | `/var/pictures.db`       | images bolt file location                       |
-| image.resize-width      | IMAGE_RESIZE_WIDTH      | `2400`                   | width of resized image                          |
-| image.resize-height     | IMAGE_RESIZE_HEIGHT     | `900`                    | height of resized image                         |
-| auth.ttl.jwt            | AUTH_TTL_JWT            | `5m`                     | jwt TTL                                         |
-| auth.ttl.cookie         | AUTH_TTL_COOKIE         | `200h`                   | cookie TTL                                      |
-| auth.google.cid         | AUTH_GOOGLE_CID         |                          | Google OAuth client ID                          |
-| auth.google.csec        | AUTH_GOOGLE_CSEC        |                          | Google OAuth client secret                      |
-| auth.facebook.cid       | AUTH_FACEBOOK_CID       |                          | Facebook OAuth client ID                        |
-| auth.facebook.csec      | AUTH_FACEBOOK_CSEC      |                          | Facebook OAuth client secret                    |
-| auth.github.cid         | AUTH_GITHUB_CID         |                          | Github OAuth client ID                          |
-| auth.github.csec        | AUTH_GITHUB_CSEC        |                          | Github OAuth client secret                      |
-| auth.twitter.cid        | AUTH_TWITTER_CID        |                          | Twitter Consumer API Key                        |
-| auth.twitter.csec       | AUTH_TWITTER_CSEC       |                          | Twitter Consumer API Secret key                 |
-| auth.yandex.cid         | AUTH_YANDEX_CID         |                          | Yandex OAuth client ID                          |
-| auth.yandex.csec        | AUTH_YANDEX_CSEC        |                          | Yandex OAuth client secret                      |
-| auth.dev                | AUTH_DEV                | `false`                  | local oauth2 server, development mode only      |
-| auth.anon               | AUTH_ANON               | `false`                  | enable anonymous login                          |
-| auth.email.enable       | AUTH_EMAIL_ENABLE       | `false`                  | enable auth via email                           |
-| auth.email.from         | AUTH_EMAIL_FROM         |                          | email from                                      |
-| auth.email.subj         | AUTH_EMAIL_SUBJ         | `remark42 confirmation`  | email subject                                   |
-| auth.email.content-type | AUTH_EMAIL_CONTENT_TYPE | `text/html`              | email content type                              |
-| auth.email.template     | AUTH_EMAIL_TEMPLATE     | none (predefined)        | custom email message template file              |
-| notify.type             | NOTIFY_TYPE             | none                     | type of notification (telegram and/or email)    |
-| notify.queue            | NOTIFY_QUEUE            | `100`                    | size of notification queue                      |
-| notify.telegram.token   | NOTIFY_TELEGRAM_TOKEN   |                          | telegram token                                  |
-| notify.telegram.chan    | NOTIFY_TELEGRAM_CHAN    |                          | telegram channel                                |
-| notify.telegram.timeout | NOTIFY_TELEGRAM_TIMEOUT | `5s`                     | telegram timeout                                |
-| notify.email.fromAddress | NOTIFY_EMAIL_FROM      |                          | from email address                              |
-| notify.email.verification_subj | NOTIFY_EMAIL_VERIFICATION_SUBJ | `Email verification` | verification message subject          |
-| notify.email.notify_admin | NOTIFY_EMAIL_ADMIN    | `false`                  | notify admin on new comments via ADMIN_SHARED_EMAIL |
-| email.provider            | EMAIL_PROVIDER        | smtp                     | email service provider (smtp or mailgun or sendgrid)|
-| email.smtp.host           | EMAIL_SMTP_HOST       |                          | SMTP host                                       |
-| email.smtp.port           | EMAIL_SMTP_PORT       |                          | SMTP port                                       |
-| email.smtp.username       | EMAIL_SMTP_USERNAME   |                          | SMTP user name                                  |
-| email.smtp.password       | EMAIL_SMTP_PASSWORD   |                          | SMTP password                                   |
-| email.smtp.tls            | EMAIL_SMTP_TLS        | `false`                  | enable TLS for SMTP                             |
-| email.smtp.timeout        | EMAIL_SMTP_TIMEOUT    | `10s`                    | SMTP TCP connection timeout                     |
-| email.mailgun.domain      | EMAIL_MG_DOMAIN       |                          | mailgun domain                                  |
-| email.mailgun.api_key     | EMAIL_MG_API_KEY      |                          | mailgun private API key                         |
-| email.mailgun.timeout     | EMAIL_MG_TIMEOUT      | `10s`                    | mailgun connection timeout                      |
-| email.sendgrid.api_key    | EMAIL_SG_API_KEY      |                          | SMTP TCP connection timeout                     |
-| email.sendgrid.timeout    | EMAIL_SG_TIMEOUT      | `10s`                    | SMTP TCP connection timeout                     |
-| ssl.type                | SSL_TYPE                | none                     | `none`-http, `static`-https, `auto`-https + le  |
-| ssl.port                | SSL_PORT                | `8443`                   | port for https server                           |
-| ssl.cert                | SSL_CERT                |                          | path to cert.pem file                           |
-| ssl.key                 | SSL_KEY                 |                          | path to key.pem file                            |
-| ssl.acme-location       | SSL_ACME_LOCATION       | `./var/acme`             | dir where obtained le-certs will be stored      |
-| ssl.acme-email          | SSL_ACME_EMAIL          |                          | admin email for receiving notifications from LE |
-| max-comment             | MAX_COMMENT_SIZE        | `2048`                   | comment's size limit                            |
-| max-votes               | MAX_VOTES               | `-1`                     | votes limit per comment, `-1` - unlimited       |
-| votes-ip                | VOTES_IP                | `false`                  | restrict votes from the same ip                 |
-| anon-vote               | ANON_VOTE               | `false`                  | allow voting for anonymous users, require VOTES_IP to be enabled as well |
-| votes-ip-time           | VOTES_IP_TIME           | `5m`                     | same ip vote restriction time, `0s` - unlimited |
-| low-score               | LOW_SCORE               | `-5`                     | low score threshold                             |
-| critical-score          | CRITICAL_SCORE          | `-10`                    | critical score threshold                        |
-| positive-score          | POSITIVE_SCORE          | `false`                  | restricts comment's score to be only positive   |
-| restricted-words        | RESTRICTED_WORDS        |                          | words banned in comments (can use `*`), _multi_ |
-| edit-time               | EDIT_TIME               | `5m`                     | edit window                                     |
-| read-age                | READONLY_AGE            |                          | read-only age of comments, days                 |
-| image-proxy.http2https  |  IMAGE_PROXY_HTTP2HTTPS | `false`                  | enable http->https proxy for images             |
-| image-proxy.cache-external | IMAGE_PROXY_CACHE_EXTERNAL | `false`            | enable caching external images to current image storage |
-| emoji                   | EMOJI                   | `false`                  | enable emoji support                            |
-| simple-view             | SIMPLE_VIEW             | `false`                  | minimized UI with basic info only               |
-| port                    | REMARK_PORT             | `8080`                   | web server port                                 |
-| web-root                | REMARK_WEB_ROOT         | `./web`                  | web server root directory                       |
-| update-limit            | UPDATE_LIMIT            | `0.5`                    | updates/sec limit                               |
-| admin-passwd            | ADMIN_PASSWD            | none (disabled)          | password for `admin` basic auth                 |
-| dbg                     | DEBUG                   | `false`                  | debug mode                                      |
+| Command line                   | Environment                    | Default                  | Description                                                             |
+|:-------------------------------|:-------------------------------|:-------------------------|:------------------------------------------------------------------------|
+| url                            | REMARK_URL                     |                          | url to remark42 server, _required_                                      |
+| secret                         | SECRET                         |                          | secret key, _required_                                                  |
+| site                           | SITE                           | `remark`                 | site name(s), _multi_                                                   |
+| store.type                     | STORE_TYPE                     | `bolt`                   | type of storage, `bolt` or `rpc`                                        |
+| store.bolt.path                | STORE_BOLT_PATH                | `./var`                  | path to data directory                                                  |
+| store.bolt.timeout             | STORE_BOLT_TIMEOUT             | `30s`                    | boltdb access timeout                                                   |
+| admin.shared.id                | ADMIN_SHARED_ID                |                          | admin names (list of user ids), _multi_                                 |
+| admin.shared.email             | ADMIN_SHARED_EMAIL             | `admin@${REMARK_URL}`    | admin email                                                             |
+| backup                         | BACKUP_PATH                    | `./var/backup`           | backups location                                                        |
+| max-back                       | MAX_BACKUP_FILES               | `10`                     | max backup files to keep                                                |
+| cache.max.items                | CACHE_MAX_ITEMS                | `1000`                   | max number of cached items, `0` - unlimited                             |
+| cache.max.value                | CACHE_MAX_VALUE                | `65536`                  | max size of cached value, `0` - unlimited                               |
+| cache.max.size                 | CACHE_MAX_SIZE                 | `50000000`               | max size of all cached values, `0` - unlimited                          |
+| avatar.type                    | AVATAR_TYPE                    | `fs`                     | type of avatar storage, `fs`, `bolt`, or `uri`                          |
+| avatar.fs.path                 | AVATAR_FS_PATH                 | `./var/avatars`          | avatars location for `fs` store                                         |
+| avatar.bolt.file               | AVATAR_BOLT_FILE               | `./var/avatars.db`       | file name for  `bolt` store                                             |
+| avatar.uri                     | AVATAR_URI                     | `./var/avatars`          | avatar store uri                                                        |
+| avatar.rsz-lmt                 | AVATAR_RSZ_LMT                 | `0` (disabled)           | max image size for resizing avatars on save                             |
+| image.type                     | IMAGE_TYPE                     | `fs`                     | type of image storage, `fs`, `bolt`                                     |
+| image.max-size                 | IMAGE_MAX_SIZE                 | `5000000`                | max size of image file                                                  |
+| image.fs.path                  | IMAGE_FS_PATH                  | `./var/pictures`         | permanent location of images                                            |
+| image.fs.staging               | IMAGE_FS_STAGING               | `./var/pictures.staging` | staging location of images                                              |
+| image.fs.partitions            | IMAGE_FS_PARTITIONS            | `100`                    | number of image partitions                                              |
+| image.bolt.file                | IMAGE_BOLT_FILE                | `/var/pictures.db`       | images bolt file location                                               |
+| image.resize-width             | IMAGE_RESIZE_WIDTH             | `2400`                   | width of resized image                                                  |
+| image.resize-height            | IMAGE_RESIZE_HEIGHT            | `900`                    | height of resized image                                                 |
+| auth.ttl.jwt                   | AUTH_TTL_JWT                   | `5m`                     | jwt TTL                                                                 |
+| auth.ttl.cookie                | AUTH_TTL_COOKIE                | `200h`                   | cookie TTL                                                              |
+| auth.google.cid                | AUTH_GOOGLE_CID                |                          | Google OAuth client ID                                                  |
+| auth.google.csec               | AUTH_GOOGLE_CSEC               |                          | Google OAuth client secret                                              |
+| auth.facebook.cid              | AUTH_FACEBOOK_CID              |                          | Facebook OAuth client ID                                                |
+| auth.facebook.csec             | AUTH_FACEBOOK_CSEC             |                          | Facebook OAuth client secret                                            |
+| auth.github.cid                | AUTH_GITHUB_CID                |                          | Github OAuth client ID                                                  |
+| auth.github.csec               | AUTH_GITHUB_CSEC               |                          | Github OAuth client secret                                              |
+| auth.twitter.cid               | AUTH_TWITTER_CID               |                          | Twitter Consumer API Key                                                |
+| auth.twitter.csec              | AUTH_TWITTER_CSEC              |                          | Twitter Consumer API Secret key                                         |
+| auth.yandex.cid                | AUTH_YANDEX_CID                |                          | Yandex OAuth client ID                                                  |
+| auth.yandex.csec               | AUTH_YANDEX_CSEC               |                          | Yandex OAuth client secret                                              |
+| auth.dev                       | AUTH_DEV                       | `false`                  | local oauth2 server, development mode only                              |
+| auth.anon                      | AUTH_ANON                      | `false`                  | enable anonymous login                                                  |
+| auth.email.enable              | AUTH_EMAIL_ENABLE              | `false`                  | enable auth via email                                                   |
+| auth.email.from                | AUTH_EMAIL_FROM                |                          | email from                                                              |
+| auth.email.subj                | AUTH_EMAIL_SUBJ                | `remark42 confirmation`  | email subject                                                           |
+| auth.email.content-type        | AUTH_EMAIL_CONTENT_TYPE        | `text/html`              | email content type                                                      |
+| auth.email.template            | AUTH_EMAIL_TEMPLATE            | none (predefined)        | custom email message template file                                      |
+| notify.type                    | NOTIFY_TYPE                    | none                     | type of notification (telegram and/or email)                            |
+| notify.queue                   | NOTIFY_QUEUE                   | `100`                    | size of notification queue                                              |
+| notify.telegram.token          | NOTIFY_TELEGRAM_TOKEN          |                          | telegram token                                                          |
+| notify.telegram.chan           | NOTIFY_TELEGRAM_CHAN           |                          | telegram channel                                                        |
+| notify.telegram.timeout        | NOTIFY_TELEGRAM_TIMEOUT        | `5s`                     | telegram timeout                                                        |
+| notify.email.fromAddress       | NOTIFY_EMAIL_FROM              |                          | from email address                                                      |
+| notify.email.verification_subj | NOTIFY_EMAIL_VERIFICATION_SUBJ | `Email verification`     | verification message subject                                            |
+| notify.email.notify_admin      | NOTIFY_EMAIL_ADMIN             | `false`                  | notify admin on new comments via ADMIN_SHARED_EMAIL                     |
+| email.provider                 | EMAIL_PROVIDER                 | smtp                     | email service provider (smtp or mailgun or sendgrid)                    |
+| email.smtp.host                | EMAIL_SMTP_HOST                |                          | SMTP host                                                               |
+| email.smtp.port                | EMAIL_SMTP_PORT                |                          | SMTP port                                                               |
+| email.smtp.username            | EMAIL_SMTP_USERNAME            |                          | SMTP user name                                                          |
+| email.smtp.password            | EMAIL_SMTP_PASSWORD            |                          | SMTP password                                                           |
+| email.smtp.tls                 | EMAIL_SMTP_TLS                 | `false`                  | enable TLS for SMTP                                                     |
+| email.smtp.timeout             | EMAIL_SMTP_TIMEOUT             | `10s`                    | SMTP TCP connection timeout                                             |
+| email.mailgun.domain           | EMAIL_MG_DOMAIN                |                          | mailgun domain                                                          |
+| email.mailgun.api_key          | EMAIL_MG_API_KEY               |                          | mailgun private API key                                                 |
+| email.mailgun.timeout          | EMAIL_MG_TIMEOUT               | `10s`                    | mailgun connection timeout                                              |
+| email.sendgrid.api_key         | EMAIL_SG_API_KEY               |                          | SMTP TCP connection timeout                                             |
+| email.sendgrid.timeout         | EMAIL_SG_TIMEOUT               | `10s`                    | SMTP TCP connection timeout                                             |
+| ssl.type                       | SSL_TYPE                       | none                     | `none`-http, `static`-https, `auto`-https + le                          |
+| ssl.port                       | SSL_PORT                       | `8443`                   | port for https server                                                   |
+| ssl.cert                       | SSL_CERT                       |                          | path to cert.pem file                                                   |
+| ssl.key                        | SSL_KEY                        |                          | path to key.pem file                                                    |
+| ssl.acme-location              | SSL_ACME_LOCATION              | `./var/acme`             | dir where obtained le-certs will be stored                              |
+| ssl.acme-email                 | SSL_ACME_EMAIL                 |                          | admin email for receiving notifications from LE                         |
+| max-comment                    | MAX_COMMENT_SIZE               | `2048`                   | comment's size limit                                                    |
+| max-votes                      | MAX_VOTES                      | `-1`                     | votes limit per comment, `-1` - unlimited                               |
+| votes-ip                       | VOTES_IP                       | `false`                  | restrict votes from the same ip                                         |
+| anon-vote                      | ANON_VOTE                      | `false`                  | allow voting for anonymous users,require VOTES_IP to be enabled as well |
+| votes-ip-time                  | VOTES_IP_TIME                  | `5m`                     | same ip vote restriction time, `0s` - unlimited                         |
+| low-score                      | LOW_SCORE                      | `-5`                     | low score threshold                                                     |
+| critical-score                 | CRITICAL_SCORE                 | `-10`                    | critical score threshold                                                |
+| positive-score                 | POSITIVE_SCORE                 | `false`                  | restricts comment's score to be only positive                           |
+| restricted-words               | RESTRICTED_WORDS               |                          | words banned in comments (can use `*`), _multi_                         |
+| edit-time                      | EDIT_TIME                      | `5m`                     | edit window                                                             |
+| read-age                       | READONLY_AGE                   |                          | read-only age of comments, days                                         |
+| image-proxy.http2https         | IMAGE_PROXY_HTTP2HTTPS         | `false`                  | enable http->https proxy for images                                     |
+| image-proxy.cache-external     | IMAGE_PROXY_CACHE_EXTERNAL     | `false`                  | enable caching external images to current image storage                 |
+| emoji                          | EMOJI                          | `false`                  | enable emoji support                                                    |
+| simple-view                    | SIMPLE_VIEW                    | `false`                  | minimized UI with basic info only                                       |
+| port                           | REMARK_PORT                    | `8080`                   | web server port                                                         |
+| web-root                       | REMARK_WEB_ROOT                | `./web`                  | web server root directory                                               |
+| update-limit                   | UPDATE_LIMIT                   | `0.5`                    | updates/sec limit                                                       |
+| admin-passwd                   | ADMIN_PASSWD                   | none (disabled)          | password for `admin` basic auth                                         |
+| dbg                            | DEBUG                          | `false`                  | debug mode                                                              |
 
 * command line parameters are long form `--<key>=value`, i.e. `--site=https://demo.remark42.com`
 * _multi_ parameters separated by `,` in the environment or repeated with command line key, like `--site=s1 --site=s2 ...`
@@ -429,10 +429,9 @@ It will expand login info and show full user ID.
 
 Two parameters allow to customize docker container on the system level:
 
-- `APP_UID` - sets UID to run remark42 application in container (default=1001)
-- `TIME_ZONE` - sets time zone of remark42 container (default=America/Chicago)
-
-_see [umputun/baseimage](https://github.com/umputun/baseimage) for more details_
+- `PUID` - set UID to run remark42 application in container (default=1000)
+- `PGID` - set GID to run remark42 application in container (default=1000)
+- `TZ` - sets time zone of remark42 container (default=Asia/Shanghai)
 
 example of compose:
 
@@ -933,4 +932,4 @@ _all admin calls require auth and admin privilege_
 * User ID hashed and prefixed by oauth provider name to avoid collisions and potential abuse.
 * All avatars resized and cached locally to prevent rate limiters from oauth providers, part of [go-pkgz/auth](https://github.com/go-pkgz/auth) functionality.
 * Images can be proxied (`IMG_PROXY=true`) to prevent mixed http/https.
-* Docker build uses [publicly available](https://github.com/umputun/baseimage) base images.
+* Docker build uses [80x86/base-debian](https://hub.docker.com/r/80x86/base-debian) base images.
