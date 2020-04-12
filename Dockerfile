@@ -1,4 +1,4 @@
-FROM golang:1.14.2-buster as build-backend
+FROM golang:1.13.10-buster as backend-builder
 
 ARG CI
 ARG DRONE
@@ -32,7 +32,7 @@ RUN \
     echo "version=$version" && \
     go build -o remark42 -ldflags "-X main.revision=${version} -s -w" ./app
 
-FROM node:10.11-alpine as build-frontend-deps
+FROM node:10.11-alpine as frontend-builder-deps
 
 ARG CI
 ENV HUSKY_SKIP_INSTALL=true
@@ -42,19 +42,20 @@ ADD frontend/package.json /srv/frontend/package.json
 ADD frontend/package-lock.json /srv/frontend/package-lock.json
 RUN cd /srv/frontend && CI=true npm ci
 
-FROM node:10.11-alpine as build-frontend
+FROM node:10.11-alpine as frontend-builder
 
 ARG CI
 ARG SKIP_FRONTEND_TEST
 ARG NODE_ENV=production
 
-COPY --from=build-frontend-deps /srv/frontend/node_modules /srv/frontend/node_modules
+COPY --from=frontend-builder-deps /srv/frontend/node_modules /srv/frontend/node_modules
 ADD frontend /srv/frontend
 RUN cd /srv/frontend && \
     if [ -z "$SKIP_FRONTEND_TEST" ] ; then npx run-p check lint lint:style test build ; \
     else echo "skip frontend tests and lint" ; npm run build ; fi && \
     rm -rf ./node_modules
 
+# merge the build
 FROM 80x86/base-debian:buster-slim-amd64 as stage
 
 RUN mkdir /stage
@@ -68,8 +69,8 @@ COPY backend/scripts/import.sh ./usr/local/bin/import
 
 RUN chmod +x ./entrypoint.sh ./usr/local/bin/backup ./usr/local/bin/restore ./usr/local/bin/import
 
-COPY --from=build-backend /build/backend/remark42 ./srv/remark42
-COPY --from=build-frontend /srv/frontend/public/ ./srv/web
+COPY --from=backend-builder /build/backend/remark42 ./srv/remark42
+COPY --from=frontend-builder /srv/frontend/public/ ./srv/web
 
 COPY docker-init.sh ./srv/init.sh
 
@@ -78,6 +79,7 @@ RUN chown -R app:app ./srv
 RUN mkdir -p ./usr/bin && ln -s ./srv/remark42 ./usr/bin/remark42
 RUN chmod +x ./srv/init.sh
 
+# final step
 FROM 80x86/base-debian:buster-slim-amd64 as final
 
 COPY --from=stage /stage/ /
