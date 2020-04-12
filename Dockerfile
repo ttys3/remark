@@ -1,4 +1,4 @@
-FROM umputun/baseimage:buildgo-latest as build-backend
+FROM golang:1.14.2-buster as build-backend
 
 ARG CI
 ARG DRONE
@@ -55,7 +55,7 @@ RUN cd /srv/frontend && \
     else echo "skip frontend tests and lint" ; npm run build ; fi && \
     rm -rf ./node_modules
 
-FROM umputun/baseimage:app as stage
+FROM 80x86/base-debian:buster-slim-amd64 as stage
 
 RUN mkdir /stage
 
@@ -78,7 +78,7 @@ RUN chown -R app:app ./srv
 RUN mkdir -p ./usr/bin && ln -s ./srv/remark42 ./usr/bin/remark42
 RUN chmod +x ./srv/init.sh
 
-FROM umputun/baseimage:app as final
+FROM 80x86/base-debian:buster-slim-amd64 as final
 
 COPY --from=stage /stage/ /
 
