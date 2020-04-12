@@ -180,7 +180,7 @@ type AdminGroup struct {
 }
 
 type EmailGroup struct {
-	Provider     string `long:"provider" env:"TYPE" description:"type of email provider" choice:"smtp" choice:"mailgun" choice:"sendgrid" default:"smtp" env-delim:","` //nolint
+	Provider     string `long:"provider" env:"PROVIDER" description:"type of email provider" choice:"smtp" choice:"mailgun" choice:"sendgrid" default:"smtp" env-delim:","` //nolint
 	// Smtp defines options for SMTP server connection, used in auth and notify modules
 	SMTP struct {
 		Host     string        `long:"host" env:"HOST" description:"SMTP host"`
