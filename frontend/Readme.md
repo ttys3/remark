@@ -30,7 +30,7 @@
 
 ### How to add new locale
 
-Please see [this documentation](https://github.com/umputun/remark42/blob/master/docs/translation.md).
+Please see [this documentation](https://github.com/80x86/remark42/blob/master/docs/translation.md).
 
 ### Notes
 

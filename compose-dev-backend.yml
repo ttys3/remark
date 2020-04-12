@@ -16,7 +16,7 @@ services:
                 - BACKEND_TEST_TIMEOUT
                 - SKIP_FRONTEND_TEST=true
 
-        image: umputun/remark42:dev
+        image: 80x86/remark42:dev
         container_name: "remark42-dev"
         hostname: "remark42-dev"
 

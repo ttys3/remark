@@ -21,7 +21,7 @@ Example `docker-compose.yaml`:
 version: '2'
 services:
   remark42:
-    image: umputun/remark42:latest
+    image: 80x86/remark42:latest
     container_name: remark42
     restart: always
     environment:

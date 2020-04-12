@@ -9,7 +9,7 @@ bin:
 	docker rm -f remark42.bin
 
 docker:
-	docker build -t umputun/remark42 --build-arg SKIP_FRONTEND_TEST=true --build-arg SKIP_BACKEND_TEST=true .
+	docker build -t 80x86/remark42 --build-arg SKIP_FRONTEND_TEST=true --build-arg SKIP_BACKEND_TEST=true .
 
 deploy:
 	docker build -f Dockerfile.artifacts -t remark42.bin .
