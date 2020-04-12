@@ -313,7 +313,7 @@ export const ConnectedRoot: FunctionComponent = () => {
           defaultMessage="Powered by <a>Remark42</a>"
           values={{
             a: (title: string) => (
-              <a class="root__copyright-link" href="https://remark42.com/">
+              <a class="root__copyright-link" href="https://github.com/ttys3/remark42">
                 {title}
               </a>
             ),
