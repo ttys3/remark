@@ -269,8 +269,8 @@ github.com/tidwall/rtree v0.0.0-20180113144539-6cd427091e0e h1:+NL1GDIUOKxVfbp2K
 github.com/tidwall/rtree v0.0.0-20180113144539-6cd427091e0e/go.mod h1:/h+UnNGt0IhNNJLkGikcdcJqm66zGD/uJGMRxK/9+Ao=
 github.com/tidwall/tinyqueue v0.0.0-20180302190814-1e39f5511563 h1:Otn9S136ELckZ3KKDyCkxapfufrqDqwmGjcHfAyXRrE=
 github.com/tidwall/tinyqueue v0.0.0-20180302190814-1e39f5511563/go.mod h1:mLqSmt7Dv/CNneF2wfcChfN1rvapyQr01LGKnKex0DQ=
-github.com/ttys3/lgr v1.0.0 h1:FDIITIVM1pHCq8+7BdKS/7NCoZ+jtN28XDUpjfEX7/Q=
-github.com/ttys3/lgr v1.0.0/go.mod h1:czhRlBilg5+y4BIz1vJhFzTnuKSKXthvLn2OE0P7p4I=
+github.com/ttys3/lgr v1.0.2 h1:mqeBIW9fIeMstAiyhCEn5GcII2XdkGd40pp4a59J0nU=
+github.com/ttys3/lgr v1.0.2/go.mod h1:czhRlBilg5+y4BIz1vJhFzTnuKSKXthvLn2OE0P7p4I=
 github.com/valyala/bytebufferpool v1.0.0 h1:GqA5TC/0021Y/b9FG4Oi9Mr3q7XYx6KllzawFIhcdPw=
 github.com/valyala/bytebufferpool v1.0.0/go.mod h1:6bBcMArwyJ5K/AmCkWv1jt77kVWyCJ6HpOuEn7z0Csc=
 github.com/valyala/fasthttp v1.0.0/go.mod h1:4vX61m6KN+xDduDNwXrhIAVZaZaZiQ1luJk8LWSxF3s=

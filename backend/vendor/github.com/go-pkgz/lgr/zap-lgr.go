@@ -2,7 +2,6 @@
 package lgr
 
 import (
-	"fmt"
 	"io"
 	stdlog "log"
 	"strings"
@@ -45,9 +44,7 @@ func InitZapLogger(dbg bool) func() {
 	}
 	return func() {
 		// flushes buffer, if any
-		if err := logger.Sync(); err != nil {
-			fmt.Printf("zap: Sync() failed with error: %s\n", err)
-		}
+		logger.Sync()
 	}
 }
 
@@ -175,7 +172,7 @@ func Printf(format string, args ...interface{}) {
 		return
 	}
 	lvl, msg := extractLevel(format)
-	gopkgzlgrLevelToZapFunc(lvl)(msg, args)
+	gopkgzlgrLevelToZapFunc(lvl)(msg, args...)
 }
 
 // bridged Print for github.com/go-pkgz/lgr v0.6.3

@@ -68,4 +68,4 @@ require (
 	gopkg.in/yaml.v2 v2.2.4 // indirect
 )
 
-replace github.com/go-pkgz/lgr v0.6.3 => github.com/ttys3/lgr v1.0.0
+replace github.com/go-pkgz/lgr v0.6.3 => github.com/ttys3/lgr v1.0.2
