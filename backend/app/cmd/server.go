@@ -531,18 +531,6 @@ func (a *serverApp) run(ctx context.Context) error {
 		<-ctx.Done()
 		log.Print("[INFO] shutdown initiated")
 		a.restSrv.Shutdown()
-		if a.devAuth != nil {
-			a.devAuth.Shutdown()
-		}
-		if e := a.dataService.Close(); e != nil {
-			log.Printf("[WARN] failed to close data store, %s", e)
-		}
-		if e := a.avatarStore.Close(); e != nil {
-			log.Printf("[WARN] failed to close avatar store, %s", e)
-		}
-		a.notifyService.Close()
-		a.imageService.Close()
-		log.Print("[INFO] shutdown completed")
 	}()
 
 	a.activateBackup(ctx) // runs in goroutine for each site
@@ -553,6 +541,22 @@ func (a *serverApp) run(ctx context.Context) error {
 	go a.imageService.Cleanup(ctx) // pictures cleanup for staging images
 
 	a.restSrv.Run(a.Port)
+
+	// shutdown procedures after HTTP server is stopped
+	if a.devAuth != nil {
+		a.devAuth.Shutdown()
+	}
+	if e := a.dataService.Close(); e != nil {
+		log.Printf("[WARN] failed to close data store, %s", e)
+	}
+	if e := a.avatarStore.Close(); e != nil {
+		log.Printf("[WARN] failed to close avatar store, %s", e)
+	}
+	a.notifyService.Close()
+	// call potentially infinite loop with cancellation after a minute as a safeguard
+	minuteCtx, _ := context.WithTimeout(context.Background(), time.Minute)
+	a.imageService.Close(minuteCtx)
+
 	close(a.terminated)
 	return nil
 }
