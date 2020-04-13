@@ -16,11 +16,11 @@ import (
 )
 
 type SMTPSender struct {
-	SmtpParams SmtpParams
-	creator SmtpClientCreator
-	Headers map[string]string
-	From string
-	Subject string
+	SmtpParams  SmtpParams
+	creator     SmtpClientCreator
+	Headers     map[string]string
+	From        string
+	Subject     string
 	ContentType string // text/plain or text/html
 }
 
@@ -62,7 +62,7 @@ func NewSMTPSender(params *SmtpParams, creator SmtpClientCreator) EmailSender {
 	}
 	return &SMTPSender{
 		SmtpParams: *params,
-		creator: creator,
+		creator:    creator,
 	}
 }
 
@@ -120,7 +120,7 @@ func (s *SMTPSender) BuildMessage(to, body, contentType string) (message string,
 	}
 
 	// https://support.google.com/mail/answer/81126 -> "Include option to unsubscribe"
-	if s.Headers != nil && len(s.Headers) > 0{
+	if s.Headers != nil && len(s.Headers) > 0 {
 		keys := make([]string, 0, len(s.Headers))
 		for k := range s.Headers {
 			keys = append(keys, k)

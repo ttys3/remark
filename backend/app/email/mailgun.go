@@ -14,18 +14,18 @@ import (
 
 // MailgunConfig contain settings for mailgun API
 type MailgunSender struct {
-	mg          *mailgun.MailgunImpl
-	Domain      string
-	APIKey      string
-	Timeout     time.Duration // TCP connection timeout
-  	BaseSender
+	mg      *mailgun.MailgunImpl
+	Domain  string
+	APIKey  string
+	Timeout time.Duration // TCP connection timeout
+	BaseSender
 }
 
 func NewMailgunSender(domain, apiKey string, timeout time.Duration) EmailSender {
 	if timeout == 0 {
 		timeout = DefaultEmailTimeout
 	}
-	sender := &MailgunSender {
+	sender := &MailgunSender{
 		Domain:  domain,
 		APIKey:  apiKey,
 		Timeout: timeout,
@@ -57,7 +57,7 @@ func (s *MailgunSender) Send(to, text string) error {
 	// You can edit the unsubscribed address list from your Control Panel or through the API.
 	// see more info via https://documentation.mailgun.com/en/latest/api-unsubscribes.html
 	// and https://documentation.mailgun.com/en/latest/user_manual.html#tracking-unsubscribes
-	if s.Headers != nil && len(s.Headers) > 0{
+	if s.Headers != nil && len(s.Headers) > 0 {
 		keys := make([]string, 0, len(s.Headers))
 		for k := range s.Headers {
 			keys = append(keys, k)

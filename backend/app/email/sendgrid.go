@@ -14,9 +14,9 @@ import (
 
 // MailgunConfig contain settings for mailgun API
 type SendgridSender struct {
-	sg          *sendgrid.Client
-	APIKey      string        // the SendGrid API key
-	Timeout     time.Duration // TCP connection timeout
+	sg      *sendgrid.Client
+	APIKey  string        // the SendGrid API key
+	Timeout time.Duration // TCP connection timeout
 	BaseSender
 }
 
@@ -24,7 +24,7 @@ func NewSendgridSender(apiKey string, timeout time.Duration) EmailSender {
 	if timeout == 0 {
 		timeout = DefaultEmailTimeout
 	}
-	sender := &SendgridSender {
+	sender := &SendgridSender{
 		APIKey:  apiKey,
 		Timeout: timeout,
 	}
@@ -51,7 +51,7 @@ func (s *SendgridSender) Send(to, text string) error {
 
 	// extra headers used mainly for List-Unsubscribe feature
 	// see more info via https://sendgrid.com/docs/ui/sending-email/list-unsubscribe/
-	if s.Headers != nil && len(s.Headers) > 0{
+	if s.Headers != nil && len(s.Headers) > 0 {
 		sgmail.Headers = s.Headers
 	}
 	s.SetTimeout(s.Timeout)
