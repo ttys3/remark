@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"time"
 
+	log "github.com/go-pkgz/lgr"
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
@@ -16,10 +17,7 @@ type SendgridSender struct {
 	sg          *sendgrid.Client
 	APIKey      string        // the SendGrid API key
 	Timeout     time.Duration // TCP connection timeout
-	From        string
-	Subject     string
-	Headers     map[string]string
-	ContentType string // text/plain or text/html
+	BaseSender
 }
 
 func NewSendgridSender(apiKey string, timeout time.Duration) EmailSender {
@@ -66,27 +64,8 @@ func (s *SendgridSender) Send(to, text string) error {
 	if resp.StatusCode%100 != 2 {
 		return fmt.Errorf("sendgrid: send failed with err: %+v", resp.Body)
 	}
-	fmt.Printf("sendgrid: send to %s success, StatusCode: %d\n", to, resp.StatusCode)
+	log.Infof("sendgrid: send to %s success, subject: %s, StatusCode: %d\n", to, s.Subject, resp.StatusCode)
 	return nil
-}
-
-func (s *SendgridSender) AddHeader(header, value string) {
-	if s.Headers == nil {
-		s.Headers = make(map[string]string)
-	}
-	s.Headers[header] = value
-}
-
-func (s *SendgridSender) ResetHeaders() {
-	s.Headers = nil
-}
-
-func (s *SendgridSender) SetFrom(from string) {
-	s.From = from
-}
-
-func (s *SendgridSender) SetSubject(subject string) {
-	s.Subject = subject
 }
 
 func (s *SendgridSender) SetTimeout(timeout time.Duration) {

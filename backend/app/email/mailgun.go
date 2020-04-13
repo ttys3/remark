@@ -8,6 +8,7 @@ import (
 	"sort"
 	"time"
 
+	log "github.com/go-pkgz/lgr"
 	"github.com/mailgun/mailgun-go/v4"
 )
 
@@ -17,10 +18,7 @@ type MailgunSender struct {
 	Domain      string
 	APIKey      string
 	Timeout     time.Duration // TCP connection timeout
-	From        string
-	Subject     string
-	Headers     map[string]string
-	ContentType string // text/plain or text/html
+  	BaseSender
 }
 
 func NewMailgunSender(domain, apiKey string, timeout time.Duration) EmailSender {
@@ -70,34 +68,15 @@ func (s *MailgunSender) Send(to, text string) error {
 		}
 	}
 	s.SetTimeout(s.Timeout)
-	ctx, cancel := context.WithTimeout(context.Background(), DefaultEmailTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), s.Timeout*2)
 	defer cancel()
 	// Send the message	with a 10 second timeout
 	resp, id, err := s.mg.Send(ctx, message)
 	if err != nil {
 		return fmt.Errorf("mailgun: send failed: %w", err)
 	}
-	fmt.Printf("mailgun: send to %s success, ID: %s Resp: %s\n", to, id, resp)
+	log.Infof("mailgun: send to %s success, subject: %s, ID: %s Resp: %s\n", to, s.Subject, id, resp)
 	return nil
-}
-
-func (s *MailgunSender) AddHeader(header, value string) {
-	if s.Headers == nil {
-		s.Headers = make(map[string]string)
-	}
-	s.Headers[header] = value
-}
-
-func (s *MailgunSender) ResetHeaders() {
-	s.Headers = nil
-}
-
-func (s *MailgunSender) SetFrom(from string) {
-	s.From = from
-}
-
-func (s *MailgunSender) SetSubject(subject string) {
-	s.Subject = subject
 }
 
 func (s *MailgunSender) SetTimeout(timeout time.Duration) {
