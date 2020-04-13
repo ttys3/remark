@@ -2,18 +2,17 @@ module github.com/umputun/remark/backend
 
 go 1.14
 
+// lock version
+// github.com/jessevdk/go-flags v1.4.1-0.20181221193153-c0795c8afcf4
+// github.com/go-pkgz/lgr v0.7.0
+replace github.com/go-pkgz/lgr v0.7.0 => github.com/ttys3/lgr v1.0.2
+
 require (
-	cloud.google.com/go v0.47.0 // indirect
-	github.com/PuerkitoBio/goquery v1.5.0
-	github.com/ajg/form v1.5.1 // indirect
+	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/alecthomas/chroma v0.7.2-0.20200305040604-4f3623dce67a
-	github.com/alecthomas/repr v0.0.0-20181024024818-d37bc2a10ba1 // indirect
-	github.com/andybalholm/cascadia v1.1.0 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/didip/tollbooth v4.0.2+incompatible
 	github.com/didip/tollbooth_chi v0.0.0-20170928041846-6ab5f3083f3d
-	github.com/fasthttp-contrib/websocket v0.0.0-20160511215533-1f3b11f56072 // indirect
-	github.com/gavv/httpexpect v2.0.0+incompatible // indirect
 	github.com/go-chi/chi v4.1.0+incompatible
 	github.com/go-chi/cors v1.1.1
 	github.com/go-chi/render v1.0.1
@@ -25,46 +24,23 @@ require (
 	github.com/go-pkgz/rest v1.5.0
 	github.com/go-pkgz/syncs v1.1.1
 	github.com/google/uuid v1.1.1
-	github.com/gopherjs/gopherjs v0.0.0-20190812055157-5d271430af9f // indirect
 	github.com/gorilla/feeds v1.1.1
-	github.com/gorilla/websocket v1.4.0 // indirect
-	github.com/hashicorp/go-multierror v1.0.0
+	github.com/hashicorp/go-multierror v1.1.0
 	github.com/jessevdk/go-flags v1.4.1-0.20181221193153-c0795c8afcf4
-	github.com/klauspost/compress v1.7.6 // indirect
-	github.com/klauspost/cpuid v1.2.1 // indirect
-	github.com/kyokomi/emoji v2.1.0+incompatible
+	github.com/kyokomi/emoji v2.2.1+incompatible
 	github.com/mailgun/mailgun-go/v4 v4.0.1
-	github.com/mattn/go-colorable v0.1.2 // indirect
-	github.com/mattn/go-isatty v0.0.9 // indirect
 	github.com/microcosm-cc/bluemonday v1.0.2
-	github.com/onsi/ginkgo v1.9.0 // indirect
-	github.com/onsi/gomega v1.6.0 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pkg/errors v0.9.1
-	github.com/rakyll/statik v0.1.6
+	github.com/rakyll/statik v0.1.7
 	github.com/rs/xid v1.2.1
 	github.com/sendgrid/rest v2.4.1+incompatible // indirect
 	github.com/sendgrid/sendgrid-go v3.5.0+incompatible
-	github.com/smartystreets/assertions v1.0.1 // indirect
-	github.com/stretchr/objx v0.2.0 // indirect
 	github.com/stretchr/testify v1.4.0
-	github.com/tidwall/buntdb v1.1.0 // indirect
-	github.com/tidwall/gjson v1.3.2 // indirect
-	github.com/valyala/fasthttp v1.4.0 // indirect
-	github.com/xeipuuv/gojsonpointer v0.0.0-20190809123943-df4f5c81cb3b // indirect
-	github.com/xeipuuv/gojsonschema v1.1.0 // indirect
 	github.com/yuin/goldmark v1.1.27
 	github.com/yuin/goldmark-highlighting v0.0.0-20200307114337-60d527fdb691
 	go.etcd.io/bbolt v1.3.4
-	go.mongodb.org/mongo-driver v1.1.2 // indirect
-	golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550
-	golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8
-	golang.org/x/net v0.0.0-20191027093000-83d349e8ac1a
-	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e // indirect
-	golang.org/x/time v0.0.0-20191024005414-555d28b269f0 // indirect
-	google.golang.org/appengine v1.6.5 // indirect
-	gopkg.in/oauth2.v3 v3.11.0 // indirect
-	gopkg.in/yaml.v2 v2.2.4 // indirect
+	golang.org/x/crypto v0.0.0-20190605123033-f99c8df09eb5
+	golang.org/x/image v0.0.0-20200119044424-58c23975cae1
+	golang.org/x/net v0.0.0-20200202094626-16171245cfb2
 )
-
-replace github.com/go-pkgz/lgr v0.7.0 => github.com/ttys3/lgr v1.0.2
