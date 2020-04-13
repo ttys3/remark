@@ -33,6 +33,9 @@ var revision = "dev"
 
 func main() {
 	fmt.Printf("remark42 %s\n", revision)
+	if len(os.Args) == 2 && (os.Args[1] == "-v" || os.Args[1] == "--version") {
+		os.Exit(0)
+	}
 
 	var opts Opts
 	p := flags.NewParser(&opts, flags.Default)
