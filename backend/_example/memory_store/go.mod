@@ -14,4 +14,4 @@ require (
 
 replace github.com/umputun/remark/backend => ../../
 
-replace github.com/go-pkgz/lgr v0.7.0 => github.com/ttys3/lgr v1.0.0
+replace github.com/go-pkgz/lgr v0.7.0 => github.com/ttys3/lgr v1.0.2
