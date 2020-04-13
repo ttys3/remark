@@ -179,6 +179,7 @@ type AdminGroup struct {
 	RPC RPCGroup `group:"rpc" namespace:"rpc" env-namespace:"RPC"`
 }
 
+// EmailGroup defines options group for email providers params
 type EmailGroup struct {
 	Provider     string `long:"provider" env:"PROVIDER" description:"type of email provider" choice:"smtp" choice:"mailgun" choice:"sendgrid" default:"smtp" env-delim:","` //nolint
 	// Smtp defines options for SMTP server connection, used in auth and notify modules
@@ -554,7 +555,8 @@ func (a *serverApp) run(ctx context.Context) error {
 	}
 	a.notifyService.Close()
 	// call potentially infinite loop with cancellation after a minute as a safeguard
-	minuteCtx, _ := context.WithTimeout(context.Background(), time.Minute)
+	minuteCtx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	defer cancel()
 	a.imageService.Close(minuteCtx)
 
 	close(a.terminated)
