@@ -77,8 +77,7 @@ jobs:
 
       - name: build the binary
         run: |
-          version="$(git rev-parse --short HEAD)"
-          go build -o remark42 -ldflags "-X main.revision=${version} -s -w" .
+          go build -o remark42 -ldflags "-X main.revision=$(git rev-parse --short HEAD) -s -w" .
           ./remark42 --version
         working-directory: backend/app
         env:
