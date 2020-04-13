@@ -75,6 +75,16 @@ jobs:
           GOFLAGS: "-mod=readonly"
           TZ: "Asia/Hong_Kong"
 
+      - name: build the binary
+        run: |
+          version="$(git rev-parse --short HEAD)"
+          go build -o remark42 -ldflags "-X main.revision=${version} -s -w" .
+          ./remark42 --version
+        working-directory: backend/app
+        env:
+          TZ: "Asia/Hong_Kong"
+          GOFLAGS: "-mod=vendor"
+
       - name: submit coverage
         run: $(go env GOPATH)/bin/goveralls -service="github" -coverprofile=$GITHUB_WORKSPACE/profile.cov
         working-directory: backend
