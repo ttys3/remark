@@ -64,7 +64,7 @@ func TestRemote_GetWithErrorDecode(t *testing.T) {
 }
 
 func TestRemote_GetWithErrorRemote(t *testing.T) {
-	c := RPC{Client: jrpc.Client{API: "http://127.0.0.2", Client: http.Client{Timeout: 10 * time.Millisecond}}}
+	c := RPC{Client: jrpc.Client{API: "http://127.0.0.2:54321", Client: http.Client{Timeout: 10 * time.Millisecond}}}
 
 	req := GetRequest{Locator: store.Locator{URL: "http://example.com/url"}, CommentID: "site"}
 	_, err := c.Get(req)
