@@ -1,4 +1,4 @@
-FROM golang:1.13.10-buster as backend-builder
+FROM golang:1.14.2-buster as backend-builder
 
 ARG CI
 ARG DRONE
