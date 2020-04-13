@@ -1,4 +1,9 @@
-# remark42 [![build_container_image](https://github.com/ttys3/remark42/workflows/build_container_image/badge.svg)](https://github.com/ttys3/remark42/actions) [![Go Report Card](https://goreportcard.com/badge/github.com/ttys3/remark42)](https://goreportcard.com/report/github.com/ttys3/remark42) [![Coverage Status](https://coveralls.io/repos/github/ttys3/remark42/badge.svg?branch=master)](https://coveralls.io/github/ttys3/remark42?branch=master)
+# remark42
+
+[![container image](https://github.com/ttys3/remark42/workflows/build_container_image/badge.svg?branch=ctr)](https://github.com/ttys3/remark42/actions?query=workflow%3Abuild_container_image)
+[![test backend](https://github.com/ttys3/remark42/workflows/test_backend/badge.svg?branch=master)](https://github.com/ttys3/remark42/actions?query=workflow%3Atest_backend)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ttys3/remark42)](https://goreportcard.com/report/github.com/ttys3/remark42)
+[![Coverage Status](https://coveralls.io/repos/github/ttys3/remark42/badge.svg?branch=master)](https://coveralls.io/github/ttys3/remark42?branch=master)
 
 
 
