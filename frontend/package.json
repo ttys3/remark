@@ -113,7 +113,7 @@
     "es6-promise": "^4.2.8",
     "focus-visible": "^5.1.0",
     "intersection-observer": "^0.7.0",
-    "lodash-es": "^4.17.15",
+    "lodash-es": "^4.17.21",
     "node-emoji": "^1.10.0",
     "preact": "^10.4.0",
     "react-intl": "^3.12.0",
